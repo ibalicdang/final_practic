@@ -1,0 +1,35 @@
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="{{ asset('bundles/framework/css/myEntities.css') }}" />
+
+  <script>
+  $( function() {
+    $( ".datepicker" ).datepicker();
+    $( ".datepicker2" ).datepicker();
+  } );
+  </script>
+  
+   <div id="wrapper">
+   <div id="container">
+{{ form_start(form) }}
+Last Name:{{ form_widget(form.lastName) }} <br>
+First Name:{{ form_widget(form.firstName) }}<br>
+Middle Name{{ form_widget(form.middleName) }}<br>
+Birth Date:{{ form_widget(form.birthDate,{attr:{"class":"datepicker"}}) }}<br>
+Address:{{ form_widget(form.address) }}<br>
+Tel Number:{{ form_widget(form.telNumber) }}<br>
+Gender:{{ form_widget(form.gender) }}<br>
+Date Employed:{{ form_widget(form.dateEmployed,{attr:{"class":"datepicker2"}}) }}<br>
+Salary:{{ form_widget(form.salary) }}<br>
+<input type="submit" value="Submit">
+{{ form_end(form) }}
+
+<button><a href="{{ path ('view_tables')}}">View Employee Table</a></button>
+</div>
+</div>
+
+
+  
+

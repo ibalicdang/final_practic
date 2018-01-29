@@ -1,0 +1,36 @@
+
+  <link rel="stylesheet" href="{{ asset('bundles/framework/css/myEntities.css') }}" />
+   <div id="wrapper">
+   <div id="container">
+    <h1>My Solo</h1>
+
+ {% for key in empInfo %}
+ <label>ID</label>
+<input type="text" name="" value="{{key.id}}"><br>
+ <label>Last Name</label>
+<input type="text" name="" value="{{key.lastName}}"><br>
+ <label>First Name</label>
+<input type="text" name="" value="{{key.firstName}}"><br>
+ <label>Middle Name</label>
+<input type="text" name="" value="{{key.middleName}}"><br>
+ <label>Birth Date</label>
+<input type="text" name="" value="{{key.birthDate}}"><br>
+ <label>Address</label>
+<input type="text" name="" value="{{key.address}}"><br>
+ <label>Tel Number</label>
+<input type="text" name="" value="{{key.telNumber}}"><br>
+ <label>Gender</label>
+<input type="text" name="" value="{{key.gender}}"><br>
+ <label>Date Employed</label>
+<input type="text" name="" value="{{key.dateEmployed}}"><br>
+ <label>Salary</label>
+<input type="text" name="" value="{{key.salary}}"><br>
+
+{% endfor %}
+
+<button><a href="{{ path ('homepage')}}">add Employee</a></button><br>
+<button><a href="{{ path ('view_tables')}}">view tables</a></button>
+</div>
+</div>
+
+
