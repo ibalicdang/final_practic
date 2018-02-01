@@ -1,5 +1,6 @@
 <?php
 
+use FOS\UserBundle\Entity\myEntities as BaseUser;
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -43,9 +44,9 @@ class myEntities
     private $middleName;
 
     /**
-     * @var string
+     * @var date
      *
-     * @ORM\Column(name="birthDate", type="string", length=255)
+     * @ORM\Column(name="birthDate", type="datetime", length=255)
      */
     private $birthDate;
 
@@ -59,7 +60,7 @@ class myEntities
     /**
      * @var string
      *
-     * @ORM\Column(name="telNumber", type="string", length=255)
+     * @ORM\Column(name="telNumber", type="integer", length=255)
      */
     private $telNumber;
 
@@ -83,6 +84,15 @@ class myEntities
      * @ORM\Column(name="salary", type="integer", length=255)
      */
     private $salary;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="employeeGroup", type="string", length=255)
+     */
+    private $employeeGroup;
+
+
 
 
     /**
@@ -165,12 +175,10 @@ class myEntities
         return $this->middleName;
     }
 
-    
-
     /**
      * Set birthDate
      *
-     * @param string $birthDate
+     * @param date $birthDate
      * @return myEntities
      */
     public function setBirthDate($birthDate)
@@ -183,7 +191,7 @@ class myEntities
     /**
      * Get birthDate
      *
-     * @return string 
+     * @return date 
      */
     public function getBirthDate()
     {
@@ -216,7 +224,7 @@ class myEntities
     /**
      * Set telNumber
      *
-     * @param string $telNumber
+     * @param integer $telNumber
      * @return myEntities
      */
     public function setTelNumber($telNumber)
@@ -229,7 +237,7 @@ class myEntities
     /**
      * Get telNumber
      *
-     * @return string 
+     * @return integer 
      */
     public function getTelNumber()
     {
@@ -303,5 +311,37 @@ class myEntities
     public function getSalary()
     {
         return $this->salary;
+    }
+
+    public function getAge(){
+
+        $today = new \DateTime();
+        $age = $today->diff($this->birthDate);
+
+        return $age->format('%Y');
+
+       }
+
+    /**
+     * Set employeeGroup
+     *
+     * @param string $employeeGroup
+     * @return myEntities
+     */
+    public function setemployeeGroup($employeeGroup)
+    {
+        $this->employeeGroup = $employeeGroup;
+
+        return $this;
+    }
+
+    /**
+     * Get employeeGroup
+     *
+     * @return string 
+     */
+    public function getemployeeGroup()
+    {
+        return $this->employeeGroup;
     }
 }

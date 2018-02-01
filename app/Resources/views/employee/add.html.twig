@@ -6,7 +6,7 @@
 
   <script>
   $( function() {
-    $( ".datepicker" ).datepicker();
+    var date = $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();
     $( ".datepicker2" ).datepicker();
   } );
   </script>
@@ -23,10 +23,11 @@ Tel Number:{{ form_widget(form.telNumber) }}<br>
 Gender:{{ form_widget(form.gender) }}<br>
 Date Employed:{{ form_widget(form.dateEmployed,{attr:{"class":"datepicker2"}}) }}<br>
 Salary:{{ form_widget(form.salary) }}<br>
+{{ form_widget(form.employeeGroup,{attr:{"hidden":"true"}}) }}<br>
 <input type="submit" value="Submit">
 {{ form_end(form) }}
 
-<button><a href="{{ path ('view_tables')}}">View Employee Table</a></button>
+<button><a href="{{ path ('homepage')}}">View Employee Table</a></button>
 </div>
 </div>
 

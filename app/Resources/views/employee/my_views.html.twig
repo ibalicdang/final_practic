@@ -1,17 +1,22 @@
 
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css"><script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-  <link rel="stylesheet" href="{{ asset('bundles/framework/css/myEntities.css') }}" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-	<h1>My View</h1>
-
-
-
-	<table>
+	<nav class="navbar navbar-dark bg-dark">
+	  	<a href="#" class = "btn btn-info">Home</a><!-- table  order by salary DESC  - total salary -->
+	  	<a href="{{ path ('add_employee')}}" class = "btn btn-info">Add Employee</a>
+		<a href="#" class = "btn btn-info">Employee details</a> <!-- table  [fullnmae][bday][age] order by age-->
+		<a href="{{ path ('add_group')}}" class = "btn btn-info">Groups</a>
+	</nav>
+	
+	<table class = "table table-bordered">
 		<tr>
 			<th>id</th>
-			<th>lastName</th>
-			<th>firtsName</th>
-			<th>middleName</th>
+			<th>Full Name</th>
 			<th>birthDate</th>
 			<th>address</th>
 			<th>telNumber</th>
@@ -23,24 +28,169 @@
 		{% for key in empInfo %}
 		<tr>
 			<td>{{key.id}}</td>
-			<td>{{key.lastName}}</td>
-			<td>{{key.firstName}}</td>
-			<td>{{key.middleName}}</td>
-			<td>{{key.birthDate}}</td>
+			<td>{{key.firstName ~ " " ~ key.middleName ~ " " ~ key.lastName }}</td>
+			<td>{{key.birthDate|date("y-m-d")}}</td>
 			<td>{{key.address}}</td>
-			<td>{{key.telNumber}}</td>
+			<td>{{key.telNumber?key.telNumber:""}}</td>
 			<td>{{key.gender}}</td>
 			<td>{{key.dateEmployed}}</td>
 			<td>{{key.salary}}</td>
-			<td><button><a href="{{ absolute_url(asset('')) }}app_dev.php/viewthis/{{ key.id }}">View</a></button></td>
-			<td><button><a href="{{ absolute_url(asset('')) }}app_dev.php/edit/{{ key.id }}">Edit</a></button></td>
-			<td><button><a href="{{ absolute_url(asset('')) }}app_dev.php/delete/{{ key.id }}">Delete</a></button></td>
+			<td><a class = "btn btn-info" href="{{ path('view_this',{'id': key.id}) }}">View</a></td>
+			<td><a class="btn btn-primary" href="{{ path('edit_this',{'id': key.id}) }}">Edit</a></td>
+			<td><a class="confirm-delete" href="#">Delete</a></td>
+			<script>
+		  $('.confirm-delete').on('click', function(){
+		    $( "#dialog-confirm" ).dialog({
+		      resizable: false,
+		      height: "auto",
+		      width: 400,
+		      modal: true,
+		      buttons: {
+		        "Yes": function() {
+		          var path = "{{ path('delete',{'id': key.id}) }}";
+		          window.location.href=path;
+		        },
+		        No: function() {
+		          $( this ).dialog( "close" );
+		        }
+		      }
+		    });
+		  }); 
+		  </script>
+		  <div id="dialog-confirm" hidden="">
+		  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Are You Sure Do You Want To Delete This Employee?</p>
+		</div>
 		</tr>
 		{% endfor %}
 	</table>
+<h1>Total Salary paid for the Employees = {{ totalSalary|number_format }}</h1><br>
 
 
 
-<button><a href="{{ path ('homepage')}}">add Employee</a></button>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<pre>
+
+group1
+emp1  
+emp2  
+emp3  
+
+group2
+emp4
+emp5
+</pre>
+<div>
+	Add groups
+
+<input type="text">
+
+<button >save</button>
+</div>
+<div>
+	add to Group
+	<select name="emp" id="">
+		<option value="">Emp1</option>
+		<option value="">Emp2</option>
+		<option value="">Emp3</option>
+	</select>	
+	<select name="group" id="">
+		<option value="">Group1</option>
+		<option value="">Group2</option>
+		<option value="">Group3</option>
+	</select>	
+	<button>Save</button>
+</div>
+
+<br/>
+group
+<div class="row">
+	<div class="col-md-4">
+		<h3>Group 1</h3>
+		<table class = "table">
+			<tr>
+				<th>Employee</th>
+				<th>Salary</th>
+			</tr>
+			<tr>
+				<td>Emp1</td>
+				<td>10</td>
+			</tr>
+			<tr>
+				<td>Emp2</td>
+				<td>10</td>
+			</tr>
+			<tr>
+				<td>Emp3</td>
+				<td>15</td>
+			</tr>
+			<tr>
+				<td>Total</td>
+				<td>35</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-md-4">
+		<h3>Group 2</h3>
+		<table class = "table">
+			<tr>
+				<th>Employee</th>
+				<th>Salary</th>
+			</tr>
+			<tr>
+				<td>Emp1</td>
+				<td>10</td>
+			</tr>
+			<tr>
+				<td>Emp2</td>
+				<td>10</td>
+			</tr>
+			<tr>
+				<td>Emp3</td>
+				<td>15</td>
+			</tr>
+			<tr>
+				<td>Total</td>
+				<td>35</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-md-4">
+		<h3>Group 3</h3>
+		<table class = "table">
+			<tr>
+				<th>Employee</th>
+				<th>Salary</th>
+			</tr>
+			<tr>
+				<td>Emp1</td>
+				<td>10</td>
+			</tr>
+			<tr>
+				<td>Emp2</td>
+				<td>10</td>
+			</tr>
+			<tr>
+				<td>Emp3</td>
+				<td>15</td>
+			</tr>
+			<tr>
+				<td>Total</td>
+				<td>35</td>
+			</tr>
+		</table>
+	</div>
+</div>
 
 
+
+
+
+
+
+ 
+            

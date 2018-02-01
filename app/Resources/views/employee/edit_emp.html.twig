@@ -1,9 +1,13 @@
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="{{ asset('bundles/framework/css/myEntities.css') }}" />
+  <link rel="stylesheet" href="{{ asset('bundles/framework/css/myEntities.css') }}" />
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css"><script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   $( function() {
     $( ".datepicker" ).datepicker();
@@ -11,7 +15,7 @@
   } );
   
   </script>
-    <div id="wrapper">
+  <div id="wrapper">
    <div id="container">
 {% block main %}
     <h1> edit</h1>
@@ -26,12 +30,10 @@
         Gender:{{ form_widget(edit_form.gender) }}<br>
         Date Employed:{{ form_widget(edit_form.dateEmployed,{attr:{"class":"datepicker2"}}) }}<br>
         Salary:{{ form_widget(edit_form.salary) }}<br>
-        <input type="submit" value="Edit" />
+        <input type="submit" class="confirm-delete" value="Edit"/>
     {{ form_end(edit_form) }}
-
-
-            <button><a href="{{ path('view_tables') }}">Back to the list</a></button>
-            </div>
-            </div>
-
+            <button><a href="{{ path('homepage') }}">Back to the list</a></button>
+   </div>
+ </div>
+      
 {% endblock %}

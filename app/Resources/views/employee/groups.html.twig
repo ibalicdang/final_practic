@@ -1,0 +1,97 @@
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  <div class="form-control">
+  	{{ form_start(form) }}
+  	Group Name:{{ form_widget(form.groupName,{attr:{"class":'form-control'}}) }}<br />
+  	<input class="btn btn-info" type="submit" value="Add Group">
+  	{{ form_end(form) }}
+ 
+
+  <div>
+  <label>Select Employee</label>
+	<select class="selectpicker">
+	<option value="{{ noGroup }}">Please Select</option>
+	{% for keys in myEmployee %}
+		<option value="{{ keys.firstName }}">{{ (keys.firstName) }}</option>
+	{% endfor %}
+	</select><br>
+ </div>
+
+
+
+ <div>
+ 	<label for="">Select Group</label>
+ 	<select name="group" id="selectedGroups" class="selectpicker">
+	<option value="{{ noGroup }}">Please Select</option>
+	{% for keys in employeeGroup %}
+		<option value="{{ keys.groupName }}">{{ keys.groupName }}</option>
+	{% endfor %}
+	</select>
+ </div>
+  <input type="text" size="30" name="display" id="display" />
+<input type="button" id="showVal" value="Value Property" />
+            <input type="button" id="showTxt" value="selectedIndex/Text" />
+            <input type="button" id="doLoop" value="Value from Loop" />
+ <input type="submit" id="submit" value="Add To Group">
+
+  </div>
+<script type="text/javascript">
+	(function() {
+    
+    // get references to select list and display text box
+    var sel = document.getElementById('selectedGroups');
+    var el = document.getElementById('display');
+
+
+    function getSelectedOption(sel) {
+        var opt;
+        for ( var i = 0, len = sel.options.length; i < len; i++ ) {
+            opt = sel.options[i];
+            if ( opt.selected === true ) {
+                break;
+            }
+        }
+        return opt;
+    }
+
+    // assign onclick handlers to the buttons
+    document.getElementById('showVal').onclick = function () {
+        el.value = sel.value;    
+    }
+    
+    document.getElementById('showTxt').onclick = function () {
+        // access text property of selected option
+        el.value = sel.options[sel.selectedIndex].text;
+    }
+
+    document.getElementById('doLoop').onclick = function () {
+        var opt = getSelectedOption(sel);
+        el.value = opt.value;
+    }
+    
+}());
+</script>
+
+<div class="container">
+		{% for keys in employeeGroup %}
+	<table class = "table table-bordered">
+	<h3>Group {{ keys.groupName }}</h3>
+		
+		<tr>
+			<th>Full Name</th>
+			<th>Birth Date</th>
+			<th>Age</th>
+		</tr>
+
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+
+	</table>
+	{% endfor %}
+</div>
+

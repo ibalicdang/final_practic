@@ -16,14 +16,14 @@ class myEntitiesType extends AbstractType
         $builder
         ->add('lastName')
         ->add('firstName')
-        ->add('middleName')
-        ->add('birthDate')
+        ->add('middleName',null,array( 'required' => false))
+        ->add('birthDate','date',array('label' => 'date','widget' => 'single_text','html5' => false ))
         ->add('address')
-        ->add('telNumber')
+        ->add('telNumber',null,array( 'required' => false))
         ->add('gender')
         ->add('dateEmployed')
-        ->add('salary');
-        
+        ->add('salary')
+        ->add('employeeGroup',null,array( 'required' => false));
     }/**
      * {@inheritdoc}
      */
@@ -41,6 +41,5 @@ class myEntitiesType extends AbstractType
     {
         return 'appbundle_myentities';
     }
-
 
 }

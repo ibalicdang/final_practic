@@ -1,36 +1,27 @@
 
-  <link rel="stylesheet" href="{{ asset('bundles/framework/css/myEntities.css') }}" />
-   <div id="wrapper">
-   <div id="container">
-    <h1>My Solo</h1>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css"><script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
- {% for key in empInfo %}
- <label>ID</label>
-<input type="text" name="" value="{{key.id}}"><br>
- <label>Last Name</label>
-<input type="text" name="" value="{{key.lastName}}"><br>
- <label>First Name</label>
-<input type="text" name="" value="{{key.firstName}}"><br>
- <label>Middle Name</label>
-<input type="text" name="" value="{{key.middleName}}"><br>
- <label>Birth Date</label>
-<input type="text" name="" value="{{key.birthDate}}"><br>
- <label>Address</label>
-<input type="text" name="" value="{{key.address}}"><br>
- <label>Tel Number</label>
-<input type="text" name="" value="{{key.telNumber}}"><br>
- <label>Gender</label>
-<input type="text" name="" value="{{key.gender}}"><br>
- <label>Date Employed</label>
-<input type="text" name="" value="{{key.dateEmployed}}"><br>
- <label>Salary</label>
-<input type="text" name="" value="{{key.salary}}"><br>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-{% endfor %}
-
-<button><a href="{{ path ('homepage')}}">add Employee</a></button><br>
-<button><a href="{{ path ('view_tables')}}">view tables</a></button>
+<div class="container">
+	<table class = "table table-bordered">
+		<tr>
+			<th>Full Name</th>
+			<th>Birth Date</th>
+			<th>Age</th>
+		</tr>
+		{% for key in empInfo %}
+		<tr>
+			<td>{{key.firstName ~ " " ~ key.middleName ~ " " ~ key.lastName }}</td>
+			<td>{{key.birthDate|date("Y-m-d")}}</td>
+			<td>{{key.age}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	<a class = "btn btn-info" href="{{ path ('add_employee')}}">Add More Employees</a><br><br>
+	<a class = "btn btn-info" href="{{ path ('homepage')}}">View All Employees</a>
 </div>
-</div>
-
-
+ 

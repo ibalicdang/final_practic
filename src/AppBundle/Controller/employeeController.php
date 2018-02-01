@@ -4,22 +4,25 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\myEntities;
 use AppBundle\Form\myEntitiesType;
+use AppBundle\Entity\employeeGroup;
+use AppBundle\Form\employeeGroupType;
+use AppBundle\Form\addGroupType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 class employeeController extends Controller{
 
 /**
-*@Route("/", name="homepage")
+*@Route("/add-employee", name="add_employee")
 */
 public function indexAction(Request $request){
 
 
-        $em = $this->getDoctrine()->getManager();
+    $em = $this->getDoctrine()->getManager();
 		$myEntities = new myEntities();
 		$form=$this->createForm(new myEntitiesType(), $myEntities);
 		$form->handleRequest($request);
@@ -41,16 +44,33 @@ public function indexAction(Request $request){
 
 
    /**
-	*@Route("/view_table", name="view_tables")
+	*@Route("/", name="homepage")
 	*/
 		public function viewTableAction(Request $request){
 
-		$myEntities = $this->getDoctrine()
-       ->getRepository('AppBundle:myEntities')
-       ->findAll();
-        return $this->render('employee/my_views.html.twig',array('empInfo'=>$myEntities));
+        $em = $this->getDoctrine()->getManager();
+        
+        $myEntities = $em->getRepository('AppBundle:myEntities')
+            ->createQueryBuilder('t')
+            ->orderBy('t.salary', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        $get_info = $em->getRepository('AppBundle:myEntities')
+            ->createQueryBuilder('t')
+            ->select('SUM(t.salary) as totalSalary')
+            ->getQuery()
+            ->getSingleScalarResult();
+       
+        
+        return $this->render('employee/my_views.html.twig',[
+            'empInfo' => $myEntities,
+            'totalSalary' => $get_info,
+        ]);
+
+
+
     }
-    
 
      /**
 	*@Route("/delete/{id}", name="delete")
@@ -62,7 +82,7 @@ public function indexAction(Request $request){
 		$em->remove($post);
 		$em->flush();
 
-		return $this->redirectToRoute('view_tables');
+		return $this->redirectToRoute('homepage');
     }
 
     /**
@@ -99,15 +119,68 @@ public function indexAction(Request $request){
 
     }
 
-     /**
-     * @Route("/view")
-     */
-    public function indexxAction(Request $request)
-    {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-        ));
+  /**
+  *@Route("/ageCalc")
+  */
+    
+public function ageCalc (Request $request){
+             $em = $this->getDoctrine()->getManager();
+            $myEntities = $em->getRepository('AppBundle:myEntities')
+            ->createQueryBuilder('t')
+            ->orderBy('t.birthDate')
+            ->getQuery()
+            ->getResult();
+
+  return $this->render('employee/view_solo.html.twig',[
+            'myEntities' => $myEntities,
+        ]);
+
+
     }
+
+/**
+*@Route("/add-group", name="add_group")
+*/
+public function addGroupAction(Request $request){
+
+    $em = $this->getDoctrine()->getManager();
+        
+     $myEmployeeGroup = $em->getRepository('AppBundle:employeeGroup')
+            ->createQueryBuilder('t')
+            ->select('t.groupName')
+            ->getQuery()
+            ->getResult();
+
+     $myEmployee = $em->getRepository('AppBundle:myEntities')
+            ->createQueryBuilder('t')
+            ->select('t.firstName')
+            ->getQuery()
+            ->getResult();
+
+    $employeeGroup = new employeeGroup();
+    $form=$this->createForm(new employeeGroupType(), $employeeGroup);
+    $form->handleRequest($request);
+
+    if ($form->isvalid()) {
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($employeeGroup);
+      $em->flush();
+
+      return $this->redirectToRoute('add_group');
+            
+    }
+    
+    $noGroup = "No Group";
+    
+         return $this->render('employee/groups.html.twig', array(
+        'employeeGroup' => $myEmployeeGroup,
+        'myEmployee' => $myEmployee,
+        'noGroup' => $noGroup,
+        'form' => $form->createView(),
+
+    ));
+         
+       } 
+
 } 
 
